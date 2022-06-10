@@ -30,12 +30,12 @@ class Bank
 public:
     string accountNumber; // storing account holders account number
     string name;          // storing the account holders name
-    int dd, mm;           // storing the account holders date of birth
-    string yyyy;
+    // int dd, mm;           // storing the account holders date of birth
+    string dob;
     string address;
-    int phoneNumber;
-    int deposit;            // storing the account holders deposit amount
-    int accountType;        // Type of account - Savings or Current
+    string phoneNumber;
+    string deposit;         // storing the account holders deposit amount
+    string accountType;     // Type of account - Savings or Current
     string password;        // storing the account holders account password
     string confirmPassword; // storing the account holders account password
     string DT;
@@ -77,65 +77,47 @@ void Bank::getData()
     cout << "\nEnter the date of birth(dd/mm/yyyy):";
     fflush(stdin);
 
-    cout << "\nDate: ";
-    cin >> dd;
-    fflush(stdin);
-    cout << "\nMonth: ";
-    cin >> mm;
-    fflush(stdin);
-    cout << "\nYear: ";
-    getline(cin, yyyy);
-
-    while (dd <= 31 && mm <= 12 && yyyy.length() > 4 && yyyy.length() < 4)
-    {
-        cout << "\nPlease give a correct date ";
-        cout << "\nEnter the date of birth(dd/mm/yyyy):";
-        fflush(stdin);
-
-        cout << "\nDate: ";
-        cin >> dd;
-        fflush(stdin);
-        cout << "\nMonth: ";
-        cin >> mm;
-        fflush(stdin);
-        cout << "\nYear: ";
-        getline(cin, yyyy);
-    }
+    getline(cin, dob);
 
     cout << "\nEnter The Account Holder's Address: ";
     fflush(stdin);
     getline(cin, address);
     cout << "\nEnter The Account Holder's Phone number: ";
-    cout << "+880";
+    // cout << "+88";
     fflush(stdin);
     // getline(cin, phoneNumber);
     cin >> phoneNumber;
-    while (sizeof(phoneNumber) > 11 && sizeof(phoneNumber) < 11)
-    {
-        cout << "\nInvalid Phone Number";
-        cout << "\nEnter The Account Holder's Phone number: ";
-        cout << "+880";
-        fflush(stdin);
-        cin >> phoneNumber;
-    }
+    // while (sizeof(phoneNumber) != 11)
+    // {
+    //     cout << "\nInvalid Phone Number";
+    //     cout << "\nEnter The Account Holder's Phone number: ";
+    //     // cout << "+88";
+    //     fflush(stdin);
+    //     cin >> phoneNumber;
+    // }
 
+    fflush(stdin);
     cout << "\nEnter The type of account you want : ";
     cout << "\n1. Savings  ";
     cout << "\n2. Current  " << endl;
     cout << ": ";
-    fflush(stdin);
-    cin >> accountType;
-    if (accountType == 1)
+    // fflush(stdin);
+    // cin >> accountType;
+    int choice;
+    cin >> choice;
+    if (choice == 1)
     {
+        accountType = "Savings";
         cout << "You have selected savings" << endl;
     }
-    else if (accountType == 2)
+    else if (choice == 2)
     {
+        accountType = "Current";
         cout << "You have selected Current" << endl;
     }
     else
     {
-        while (accountType != 1 || accountType != 2) // it will continue until you choose option 1 or 2
+        while (choice != 1 || choice != 2) // it will continue until you choose option 1 or 2
         {
 
             cout << "Please give a correct choice " << endl;
@@ -144,13 +126,16 @@ void Bank::getData()
             cout << "\n1. Savings  ";
             cout << "\n2. Current  " << endl;
             cout << ": ";
-            cin >> accountType;
-            if (accountType == 1)
+            fflush(stdin);
+            cin >> choice;
+            if (choice == 1)
             {
+                accountType = "Savings";
                 cout << "You have selected savings" << endl;
             }
-            else if (accountType == 2)
+            else if (choice == 2)
             {
+                accountType = "Current";
                 cout << "You have selected Current" << endl;
             }
         }
@@ -164,15 +149,15 @@ void Bank::getData()
     {
         cout << "\nEnter the amount to deposit: Rs ";
         fflush(stdin);
-        cin >> dep;
-        cout << "\nYour deposit amount is Rs. " << dep << endl;
+        cin >> deposit;
+        cout << "\nYour deposit amount is Rs. " << deposit << endl;
     }
     else if (ch == 2)
     {
         fflush(stdin);
-        dep = 0;
+        deposit = to_string(0);
 
-        cout << "\nYour deposit amount is Rs. " << dep << endl;
+        cout << "\nYour deposit amount is Rs. " << deposit << endl;
     }
     else
     {
@@ -186,20 +171,20 @@ void Bank::getData()
             {
                 cout << "\nEnter the amount to deposit: Rs ";
                 fflush(stdin);
-                cin >> dep;
-                cout << "\nYour deposit amount is Rs. " << dep << endl;
+                cin >> deposit;
+                cout << "\nYour deposit amount is Rs. " << deposit << endl;
             }
             else if (ch == 2)
             {
                 fflush(stdin);
-                dep = 0;
+                deposit = to_string(0);
 
-                cout << "\nYour deposit amount is Rs. " << dep << endl;
+                cout << "\nYour deposit amount is Rs. " << deposit << endl;
             }
         }
     }
 
-    deposit = dep;
+    // deposit = dep;
 
     cout << "\nNow create a password for your account: ";
     // cin.clear();
@@ -243,12 +228,84 @@ void Bank::writeData()
 {
     ofstream file, file2;
     file.open("Bank Record.csv", ios::out | ios::app); // | = bitwise OR operator
-    file << accountNumber << " , " << name << " , " << dd << "/" << mm << "/" << yyyy
+    file << accountNumber << " , " << name << " , " << dob
          << " , " << address << " , " << phoneNumber << " , " << accountType << " , " << deposit << " , " << DT << " , " << endl;
     file.close();
     file2.open("Account Information.csv", ios::out | ios::app);
     file2 << accountNumber << " , " << password << " , " << endl;
     file2.close();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void Bank::displayData()
+{
+    int amount;
+    cout << "\n\n\t\tACCOUNT HOLDER LIST\n\n";
+    cout << "====================================================="
+         << "========================================================="
+         << "=================================================================\n";
+    cout << "  Account No. \t\t Name \t\t Type \t\t Balance \t\t Address \t\t Phone No. \t\t Creation Date \t\t\n";
+    cout << "====================================================="
+         << "========================================================="
+         << "=================================================================\n";
+    ifstream is("Bank Record.csv");
+    int i = 1, sz = 0, sz1 = 0;
+    char c;
+    // is.seekg(0, ios::end);
+    sz = is.tellg();
+    // cout << sz << endl;
+    is.seekg(0, ios::beg); // used to move the get pointer to a desired location which is beginning of the file
+    while (!is.eof())
+    {
+        cout << i << ". ";
+        i++;
+        getline(is, accountNumber, ',');
+        getline(is, name, ',');
+        getline(is, dob, ',');
+        getline(is, address, ',');
+        getline(is, phoneNumber, ',');
+        getline(is, accountType, ',');
+        getline(is, deposit, ',');
+        getline(is, DT, ',');
+
+        amount = atoi(deposit.c_str()); // atoi is used to convert string value to integer
+        sz1 = is.tellg();               /// is used to know where the get pointer is in a file.
+        cout << accountNumber << "\t\t" << name << "\t\t" << accountType << "\t" << amount << "\t\t\t" << address << "\t\t\t" << phoneNumber << "\t\t" << DT << "\t\t" << endl;
+        if (sz == (sz1))
+            break;
+    }
+login_try:
+    cout << "\n\n\n";
+    cout << " Enter 1 to go back to Main Menu" << endl;
+    cout << " Enter 2 to go back to Previous Menu" << endl;
+    cout << " Enter 0 to Exit " << endl;
+    cout << " Enter your choice: ";
+    cin >> main_exit;
+    if (main_exit == 1)
+    {
+        system("cls");
+        main();
+    }
+
+    else if (main_exit == 2)
+    {
+        system("cls");
+        menuEmployee();
+    }
+
+    else if (main_exit == 0)
+    {
+        system("cls");
+        close();
+    }
+
+    else
+    {
+        printf("\nInvalid Choice! Try again.....");
+        // system("cls");
+        goto login_try;
+    }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -284,15 +341,15 @@ menu:
     // cout << "\n";
     switch (ch)
     {
-        // case 1:
-        //     h.searchAcc();
-        //     break;
-        // case 2:
-        //     h.displatData();
-        //     break;
-        // case 3:
-        //     close();
-        //     break;
+    case 1:
+        // h.searchAcc();
+        break;
+    case 2:
+        h.displayData();
+        break;
+    case 3:
+        close();
+        break;
 
     default:
         cout << "\n Invalid choice. Try again.....";
@@ -643,9 +700,11 @@ menu:
     switch (ch)
     {
     case 1:
+        system("cls");
         employee();
         break;
     case 2:
+        system("cls");
         client();
         break;
     case 3:

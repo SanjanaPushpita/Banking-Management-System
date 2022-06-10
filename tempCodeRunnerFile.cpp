@@ -1,15 +1,8 @@
-while (dd <= 31 && mm <= 12 && yyyy.length() == 4)
+while (sizeof(phoneNumber) != 11)
     // {
-    //     cout << "\nPlease give a correct date ";
-    //     cout << "\nEnter the date of birth(dd/mm/yyyy):";
+    //     cout << "\nInvalid Phone Number";
+    //     cout << "\nEnter The Account Holder's Phone number: ";
+    //     // cout << "+88";
     //     fflush(stdin);
-
-    //     cout << "\nDate: ";
-    //     cin >> dd;
-    //     fflush(stdin);
-    //     cout << "\nMonth: ";
-    //     cin >> mm;
-    //     fflush(stdin);
-    //     cout << "\nYear: ";
-    //     getline(cin, yyyy);
+    //     cin >> phoneNumber;
     // }
