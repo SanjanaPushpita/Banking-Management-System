@@ -238,6 +238,122 @@ void Bank::writeData()
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+void Bank::searchData()
+{
+    int flag = 0, choice, amount;
+    string accNo, nameS;
+    ifstream is("Bank Record.csv");
+    cout << "\nDo you want to search data by \n";
+    cout << "\n1.Account Number";
+    cout << "\n2.Account Name\n";
+    fflush(stdin);
+    cin >> choice;
+    if (choice == 1)
+    {
+        cout << "\nEnter the account number:";
+        fflush(stdin);
+        cin >> accNo;
+        do
+        {
+            getline(is, accountNumber, ',');
+            getline(is, name, ',');
+            getline(is, dob, ',');
+            getline(is, address, ',');
+            getline(is, phoneNumber, ',');
+            getline(is, accountType, ',');
+            getline(is, deposit, ',');
+            getline(is, DT, ',');
+            amount = atoi(deposit.c_str());
+            if (accNo == accountNumber)
+            {
+                flag = 1;
+                system("cls");
+                system("color 4");
+                cout << "\nAccount NO.:" << accountNumber << endl;
+                cout << "\nName:" << name << endl;
+                cout << "\nDOB:" << dob << endl;
+                cout << "\nAddress: " << address << endl;
+                cout << "\nPhone number:" << phoneNumber << endl;
+                cout << "\nType Of Account:" << accountType << endl;
+                cout << "\nAmount deposited:" << deposit << endl;
+                cout << "\nDate of Account created:" << DT << endl;
+            }
+
+        } while (is.good());
+    }
+    else if (choice == 2)
+    {
+        cout << "Enter the Name of Account Holder:";
+        fflush(stdin);
+        cin >> nameS;
+        do
+        {
+            getline(is, accountNumber, ',');
+            getline(is, name, ',');
+            getline(is, dob, ',');
+            getline(is, address, ',');
+            getline(is, phoneNumber, ',');
+            getline(is, accountType, ',');
+            getline(is, deposit, ',');
+            getline(is, DT, ',');
+            amount = atoi(deposit.c_str());
+            if (nameS == name)
+            {
+                flag = 1;
+                system("cls");
+                system("color 4");
+                cout << "\nAccount NO.:" << accountNumber << endl;
+                cout << "\nName:" << name << endl;
+                cout << "\nDOB:" << dob << endl;
+                cout << "\nAddress: " << address << endl;
+                cout << "\nPhone number:" << phoneNumber << endl;
+                cout << "\nType Of Account:" << accountType << endl;
+                cout << "\nAmount deposited:" << deposit << endl;
+                cout << "\nDate of Account created:" << DT << endl;
+            }
+
+        } while (is.good());
+    }
+    if (choice == 0)
+    {
+        cout << "\n\n\t\tAccount doesn't Exist!";
+    }
+    is.close();
+login_try:
+    cout << "\n\n\n";
+    cout << " Enter 1 to go back to Main Menu" << endl;
+    cout << " Enter 2 to go back to Previous Menu" << endl;
+    cout << " Enter 0 to Exit " << endl;
+    cout << " Enter your choice: ";
+    cin >> main_exit;
+    if (main_exit == 1)
+    {
+        system("cls");
+        main();
+    }
+
+    else if (main_exit == 2)
+    {
+        system("cls");
+        menuEmployee();
+    }
+
+    else if (main_exit == 0)
+    {
+        system("cls");
+        close();
+    }
+
+    else
+    {
+        printf("\nInvalid Choice! Try again.....");
+        // system("cls");
+        goto login_try;
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 void Bank::displayData()
 {
     int amount;
@@ -332,25 +448,21 @@ menu:
     cout << "\n            \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 BANK RECORD \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2";
     cout << "\n            ----------------------- Welcome to the Employee Menu ---------------------------";
     cout << "\n";
-    cout << "\n                             1.Check the details of an existing account";
-    cout << "\n                             2.Details of all Account Holders Name";
-    cout << "\n                             3.Exit";
+    cout << "\n                             1.Details of all Account Holders Name";
+    cout << "\n                             2.Exit";
     cout << "\n";
     cout << "\n                               Enter Your Choice: ";
     cin >> ch;
     // cout << "\n";
     switch (ch)
     {
+
     case 1:
-        // h.searchAcc();
-        break;
-    case 2:
         h.displayData();
         break;
-    case 3:
+    case 2:
         close();
         break;
-
     default:
         cout << "\n Invalid choice. Try again.....";
         break;
@@ -484,10 +596,7 @@ menu:
     cout << "\n            ----------------------- Welcome to the Client Menu -----------------------------";
     cout << "\n";
     cout << "\n                             1.Create new account";
-    cout << "\n                             2.Update information' of existing account";
-    cout << "\n                             3.For transactions";
-    cout << "\n                             4.Details of existing account";
-    cout << "\n                             5.Exit";
+    cout << "\n                             2.Exit";
     cout << "\n";
     cout << "\n                               Enter Your Choice: ";
     cin >> ch;
@@ -499,19 +608,9 @@ menu:
         c.getData();
         c.writeData();
         break;
-    // case 2:
-    //     c.modify_account();
-    //     break;
-    // case 3:
-    //     c.deposit_withdraw();
-    //     break;
-    // case 4:
-    //     c.search_rec();
-    //     break;
-    // case 5:
-    //     close();
-
-    //     break;
+    case 2:
+        close();
+        break;
     default:
         cout << "\n Invalid choice. Try again.....";
         break;
@@ -649,12 +748,6 @@ menu:
         }
     }
 }
-
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
